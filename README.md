@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Idolo Logistics — sito ufficiale
 
-## Getting Started
+Prima versione del sito istituzionale di Idolo Logistics, realizzata con Next.js 16, TypeScript, React 19, App Router e Tailwind CSS 4. Il progetto è responsive, accessibile nelle interazioni principali e pronto per la pubblicazione su Vercel.
 
-First, run the development server:
+## Avvio locale
+
+Requisiti: Node.js 20.9 o successivo e npm.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Apri [http://localhost:3000](http://localhost:3000). Le modifiche ai file vengono mostrate automaticamente.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Controlli disponibili
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run typecheck
+npm run lint
+npm run build
+npm start
+```
 
-## Learn More
+`npm start` avvia in locale la build di produzione dopo `npm run build`.
 
-To learn more about Next.js, take a look at the following resources:
+## Dove modificare i contenuti
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `data/company.ts`: dati aziendali, contatti, SEO, navigazione e catalogo servizi.
+- `app/page.tsx`: homepage.
+- `app/*/page.tsx`: contenuti delle singole pagine.
+- `components/`: intestazione, footer, modulo e sezioni riutilizzabili.
+- `app/globals.css`: identità visiva, layout e responsive design.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+I dati non ancora confermati sono marcati come “in aggiornamento” in `data/company.ts`. Prima della pubblicazione definitiva occorre verificare i dati societari e sostituire i testi provvisori delle informative privacy e cookie con testi approvati.
 
-## Deploy on Vercel
+## Modulo contatti
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Il modulo effettua validazione lato client ma non trasmette né conserva dati. Per attivarlo occorre collegare un servizio email, un CRM o una Server Action e aggiornare l’informativa privacy.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Pubblicazione su Vercel
+
+1. Carica il repository su GitHub, GitLab o Bitbucket.
+2. In Vercel scegli **Add New → Project** e importa il repository.
+3. Vercel riconoscerà automaticamente Next.js; non sono richieste impostazioni di build personalizzate.
+4. Dopo il primo deploy collega il dominio definitivo.
+5. Aggiorna `seo.siteUrl` in `data/company.ts` se il dominio differisce da `https://www.idolologistics.it`.
+
+In alternativa, con Vercel CLI: `npx vercel` per una preview e `npx vercel --prod` per la produzione.
