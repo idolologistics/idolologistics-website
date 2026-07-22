@@ -1,33 +1,61 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { FormEvent, useRef, useState } from "react";
 
-type Errors = Partial<Record<"name" | "email" | "message" | "privacy", string>>;
+type Errors = Partial<Record<"name" | "email" | "phone" | "service" | "message" | "privacy", string>>;
 
 export function ContactForm() {
   const [errors, setErrors] = useState<Errors>({});
-  const [sent, setSent] = useState(false);
-  function submit(event: FormEvent<HTMLFormElement>) {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const submitting = useRef(false);
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    if (submitting.current) return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const next: Errors = {};
-    if (String(data.get("name") ?? "").trim().length < 2) next.name = "Inserisci il tuo nome o la ragione sociale.";
+    const name = String(data.get("name") ?? "").trim();
+    if (name.length < 2 || name.length > 120) next.name = "Inserisci da 2 a 120 caratteri.";
     const email = String(data.get("email") ?? "").trim();
-    if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "Inserisci un indirizzo email valido.";
-    if (String(data.get("message") ?? "").trim().length < 10) next.message = "Descrivi la richiesta con almeno 10 caratteri.";
+    if (email.length > 200 || !/^\S+@\S+\.\S+$/.test(email)) next.email = "Inserisci un indirizzo email valido.";
+    const phone = String(data.get("phone") ?? "").trim();
+    if (phone.length > 40) next.phone = "Inserisci al massimo 40 caratteri.";
+    const service = String(data.get("service") ?? "").trim();
+    if (service.length > 100) next.service = "Inserisci al massimo 100 caratteri.";
+    const message = String(data.get("message") ?? "").trim();
+    if (message.length < 10 || message.length > 5000) next.message = "Inserisci da 10 a 5000 caratteri.";
     if (!data.get("privacy")) next.privacy = "Devi accettare l’informativa per continuare.";
     setErrors(next);
-    if (Object.keys(next).length === 0) { setSent(true); event.currentTarget.reset(); }
+    setStatus("idle");
+    if (Object.keys(next).length > 0) return;
+    submitting.current = true;
+    setStatus("sending");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, service, message, privacy: true, website: String(data.get("website") ?? "") }),
+      });
+      if (!response.ok) throw new Error("Contact request failed");
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    } finally {
+      submitting.current = false;
+    }
   }
   return (
     <form className="contact-form" onSubmit={submit} noValidate id="modulo">
-      {sent && <div className="form-success" role="status">Modulo verificato correttamente. L’invio reale verrà attivato nella prossima fase.</div>}
+      {status === "success" && <div className="form-success" role="status">La richiesta è stata inviata. Ti risponderemo appena possibile.</div>}
+      {status === "error" && <div className="form-error" role="alert">Non è stato possibile inviare la richiesta. Riprova tra poco o contattaci direttamente.</div>}
+      <div className="form-honeypot" aria-hidden="true"><label htmlFor="website">Sito web</label><input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" /></div>
       <div className="form-row"><Field id="name" label="Nome o ragione sociale *" error={errors.name}><input id="name" name="name" autoComplete="name" aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined} /></Field><Field id="email" label="Email *" error={errors.email}><input id="email" name="email" type="email" autoComplete="email" aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} /></Field></div>
-      <div className="form-row"><Field id="phone" label="Telefono"><input id="phone" name="phone" type="tel" autoComplete="tel" /></Field><Field id="service" label="Servizio di interesse"><select id="service" name="service" defaultValue=""><option value="">Seleziona un servizio</option><option>Spedizioni</option><option>Raccomandate</option><option>Ritiro a domicilio</option><option>Consegna in giornata</option><option>Servizi business</option><option>Altro</option></select></Field></div>
+      <div className="form-row"><Field id="phone" label="Telefono" error={errors.phone}><input id="phone" name="phone" type="tel" autoComplete="tel" aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} /></Field><Field id="service" label="Servizio di interesse" error={errors.service}><select id="service" name="service" defaultValue="" aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}><option value="">Seleziona un servizio</option><option>Spedizioni</option><option>Raccomandate</option><option>Ritiro a domicilio</option><option>Consegna in giornata</option><option>Servizi business</option><option>Altro</option></select></Field></div>
       <Field id="message" label="Come possiamo aiutarti? *" error={errors.message}><textarea id="message" name="message" aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} placeholder="Indicaci partenza, destinazione, tipo di invio e tempistiche, se disponibili." /></Field>
-      <div className="field"><label><input type="checkbox" name="privacy" aria-invalid={!!errors.privacy} aria-describedby={errors.privacy ? "privacy-error" : undefined} /> Ho letto e accetto l’informativa privacy. *</label>{errors.privacy && <span className="field-error" id="privacy-error">{errors.privacy}</span>}</div>
-      <p className="form-note">Il modulo è dimostrativo: i dati non vengono inviati né conservati.</p>
-      <button className="button" type="submit">Verifica richiesta <span aria-hidden="true">→</span></button>
+      <div className="field"><label><input type="checkbox" name="privacy" aria-invalid={!!errors.privacy} aria-describedby={errors.privacy ? "privacy-error" : undefined} /> Ho letto e accetto l’<Link href="/privacy">informativa privacy</Link>. *</label>{errors.privacy && <span className="field-error" id="privacy-error">{errors.privacy}</span>}</div>
+      <button className="button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Invio in corso…" : "Invia richiesta"} <span aria-hidden="true">→</span></button>
     </form>
   );
 }

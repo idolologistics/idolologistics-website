@@ -36,7 +36,13 @@ I dati non ancora confermati sono marcati come “in aggiornamento” in `data/c
 
 ## Modulo contatti
 
-Il modulo effettua validazione lato client ma non trasmette né conserva dati. Per attivarlo occorre collegare un servizio email, un CRM o una Server Action e aggiornare l’informativa privacy.
+Il modulo invia le richieste tramite Resend e richiede queste variabili server su Vercel o nell’ambiente locale:
+
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL`
+- `CONTACT_FROM_EMAIL`
+
+Non inserire i valori delle variabili nel repository.
 
 ## Pubblicazione su Vercel
 
@@ -44,6 +50,6 @@ Il modulo effettua validazione lato client ma non trasmette né conserva dati. P
 2. In Vercel scegli **Add New → Project** e importa il repository.
 3. Vercel riconoscerà automaticamente Next.js; non sono richieste impostazioni di build personalizzate.
 4. Dopo il primo deploy collega il dominio definitivo.
-5. Aggiorna `seo.siteUrl` in `data/company.ts` se il dominio differisce da `https://idolologistics.com`.
+5. Aggiorna `seo.siteUrl` in `data/company.ts` se il dominio differisce da `https://www.idolologistics.it`.
 
 In alternativa, con Vercel CLI: `npx vercel` per una preview e `npx vercel --prod` per la produzione.

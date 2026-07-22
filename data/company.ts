@@ -13,7 +13,7 @@ export const company = {
   email: "idolologistics@gmail.com",
   contactForm: {
     recipient: "idolologistics@gmail.com",
-    enabled: false,
+    enabled: true,
   },
   hours: "Lunedì–Venerdì · 09:00–17:00",
   social: {
@@ -30,7 +30,7 @@ export const company = {
     title: "Idolo Logistics | Spedizioni e servizi postali a Cagliari",
     description:
       "Spedizioni nazionali e internazionali, raccomandate, ritiri a domicilio e servizi per aziende e professionisti a Cagliari.",
-    siteUrl: "https://idolologistics.com",
+    siteUrl: "https://www.idolologistics.it",
   },
 } as const;
 
