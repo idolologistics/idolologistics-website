@@ -1,5 +1,3 @@
-import { Resend } from "resend";
-
 const MAX_BODY_BYTES = 16_384;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -107,16 +105,22 @@ export async function POST(request: Request) {
   `;
 
   try {
-    const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
-      from: `Idolo Logistics – Modulo sito <${fromEmail}>`,
-      to: [toEmail],
-      replyTo: payload.email,
-      subject: `Nuova richiesta dal sito – ${subjectService}`,
-      text,
-      html,
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: `Idolo Logistics – Modulo sito <${fromEmail}>`,
+        to: [toEmail],
+        reply_to: payload.email,
+        subject: `Nuova richiesta dal sito – ${subjectService}`,
+        text,
+        html,
+      }),
     });
-    if (error) return jsonError("Non è stato possibile inviare la richiesta. Riprova tra poco.", 502);
+    if (!response.ok) return jsonError("Non è stato possibile inviare la richiesta. Riprova tra poco.", 502);
   } catch {
     return jsonError("Non è stato possibile inviare la richiesta. Riprova tra poco.", 502);
   }
