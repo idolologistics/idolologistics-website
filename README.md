@@ -44,6 +44,6 @@ Il modulo effettua validazione lato client ma non trasmette né conserva dati. P
 2. In Vercel scegli **Add New → Project** e importa il repository.
 3. Vercel riconoscerà automaticamente Next.js; non sono richieste impostazioni di build personalizzate.
 4. Dopo il primo deploy collega il dominio definitivo.
-5. Aggiorna `seo.siteUrl` in `data/company.ts` se il dominio differisce da `https://www.idolologistics.it`.
+5. Aggiorna `seo.siteUrl` in `data/company.ts` se il dominio differisce da `https://idolologistics.com`.
 
 In alternativa, con Vercel CLI: `npx vercel` per una preview e `npx vercel --prod` per la produzione.

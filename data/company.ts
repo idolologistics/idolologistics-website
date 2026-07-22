@@ -10,7 +10,11 @@ export const company = {
   city: "Cagliari",
   phone: "+39 375 778 6610",
   phoneHref: "+393757786610",
-  email: "info@idolologistics.it",
+  email: "idolologistics@gmail.com",
+  contactForm: {
+    recipient: "idolologistics@gmail.com",
+    enabled: false,
+  },
   hours: "Lunedì–Venerdì · 09:00–17:00",
   social: {
     instagram: null,
@@ -26,7 +30,7 @@ export const company = {
     title: "Idolo Logistics | Spedizioni e servizi postali a Cagliari",
     description:
       "Spedizioni nazionali e internazionali, raccomandate, ritiri a domicilio e servizi per aziende e professionisti a Cagliari.",
-    siteUrl: "https://www.idolologistics.it",
+    siteUrl: "https://idolologistics.com",
   },
 } as const;
 
