@@ -5,7 +5,7 @@ export const company = {
   agency: "Agenzia Sailpost Cagliari 1",
   tagline: "Spedizioni semplici, veloci e su misura",
   description:
-    "Servizi postali e logistici per privati, aziende e professionisti a Cagliari.",
+    "Servizi postali e logistici per privati, aziende, professionisti e Pubbliche Amministrazioni a Cagliari.",
   address: "Via Giacomo Puccini, 43 – 09128 Cagliari (CA)",
   city: "Cagliari",
   phone: "+39 375 778 6610",
@@ -18,9 +18,16 @@ export const company = {
   hours: "Lunedì–Venerdì · 09:00–17:00",
   social: {
     instagram: null,
-    facebook: null,
+    facebook: "https://www.facebook.com/idolologistics/",
     linkedin: null,
-    placeholder: "Profili social in aggiornamento",
+    whatsapp: {
+      number: "393757786610",
+      message: "Buongiorno, vorrei ricevere informazioni sui servizi di Idolo Logistics.",
+      href: "https://wa.me/393757786610?text=Buongiorno%2C%20vorrei%20ricevere%20informazioni%20sui%20servizi%20di%20Idolo%20Logistics.",
+    },
+  },
+  sailpost: {
+    publicAdministrationUrl: "https://www.sailpost.it/servizi/pubblica-amministrazione/",
   },
   legal: {
     vatNumber: "Dato societario in aggiornamento",
@@ -71,5 +78,10 @@ export const services = [
     number: "06",
     title: "Domiciliazione corrispondenza e pacchi",
     description: "Un punto affidabile per ricevere e gestire posta e spedizioni con maggiore flessibilità.",
+  },
+  {
+    number: "07",
+    title: "Servizi per la Pubblica Amministrazione",
+    description: "Gestione della corrispondenza, ritiri, lavorazioni, recapito e reportistica per enti pubblici attraverso la rete Sailpost.",
   },
 ] as const;
