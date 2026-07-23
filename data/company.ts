@@ -16,6 +16,7 @@ export const company = {
     enabled: true,
   },
   hours: "Lunedì–Venerdì · 09:00–17:00",
+  augustHours: "Dal 3 al 31 agosto 08.30 - 15:00",
   social: {
     instagram: null,
     facebook: "https://www.facebook.com/idolologistics/",
@@ -30,7 +31,7 @@ export const company = {
     publicAdministrationUrl: "https://www.sailpost.it/servizi/pubblica-amministrazione/",
   },
   legal: {
-    vatNumber: "Dato societario in aggiornamento",
+    vatNumber: "P. IVA 04032120927",
     registration: "Dato societario in aggiornamento",
   },
   seo: {
