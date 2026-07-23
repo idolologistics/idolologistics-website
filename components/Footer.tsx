@@ -23,10 +23,10 @@ export function Footer() {
           <p>Soluzioni postali e logistiche costruite intorno alle persone e al loro lavoro.</p>
         </div>
         <div><h2>Esplora</h2>{navigation.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}</div>
-        <div><h2>Contatti</h2><address>{company.address}</address><a href={`tel:${company.phoneHref}`}>{company.phone}</a><a href={`mailto:${company.email}`}>{company.email}</a><a href={company.social.whatsapp.href} target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a><a href={company.social.facebook} target="_blank" rel="noopener noreferrer">Seguici su Facebook</a></div>
+        <div><h2>Contatti</h2><address>{company.address}</address><a href={`tel:${company.phoneHref}`}>{company.phone}</a><a href={`mailto:${company.email}`}>{company.email}</a><span className="footer-vat">{company.legal.vatNumber}</span><a href={company.social.whatsapp.href} target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a><a href={company.social.facebook} target="_blank" rel="noopener noreferrer">Seguici su Facebook</a></div>
         <div><h2>Informazioni</h2><Link href="/privacy">Privacy</Link><Link href="/cookie-policy">Cookie policy</Link></div>
       </div>
-      <div className="container footer-bottom"><span>© {new Date().getFullYear()} {company.name}</span><span>{company.legal.vatNumber}</span></div>
+      <div className="container footer-bottom"><span>© {new Date().getFullYear()} {company.name}</span></div>
     </footer>
   );
 }

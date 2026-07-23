@@ -29,12 +29,29 @@ export default function AboutPage() {
             <p>La conoscenza del territorio, la disponibilità di un unico interlocutore e l’organizzazione dei servizi ci consentono di offrire risposte semplici, concrete e proporzionate alle reali necessità del cliente.</p>
           </div>
         </div>
-        <figure className="container cagliari-figure">
-          <div className="cagliari-image-frame">
-            <Image src="/images/cagliari-porto.jpg" alt="Panorama del porto e del quartiere Castello di Cagliari" fill loading="eager" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 1200px) calc(100vw - 40px), 1180px" className="cagliari-image" />
+      </section>
+
+      <section className="section agency-location-section" aria-labelledby="agency-location-title">
+        <div className="container agency-location-grid">
+          <figure>
+            <div className="agency-location-image-frame">
+              <Image
+                src="/images/agenzia-idolo-logistics.jpg"
+                alt="Ingresso dell’agenzia Idolo Logistics Sailpost in Via Giacomo Puccini 43 a Cagliari"
+                fill
+                sizes="(max-width: 980px) calc(100vw - 40px), 500px"
+                className="agency-location-image"
+              />
+            </div>
+            <figcaption className="agency-location-caption">La nostra agenzia Sailpost Cagliari 1 – Via Giacomo Puccini 43, Cagliari.</figcaption>
+          </figure>
+          <div className="agency-location-copy">
+            <p className="eyebrow"><span />LA NOSTRA SEDE</p>
+            <h2 id="agency-location-title">Un punto di riferimento a Cagliari.</h2>
+            <p>La nostra agenzia si trova in Via Giacomo Puccini 43, a Cagliari. Un luogo facilmente raggiungibile nel quale puoi ricevere assistenza, consegnare le tue spedizioni e trovare la soluzione postale o logistica più adatta alle tue esigenze.</p>
+            <Link className="button" href="/contatti">Come raggiungerci <span aria-hidden="true">→</span></Link>
           </div>
-          <figcaption>Cagliari, il territorio in cui lavoriamo ogni giorno.</figcaption>
-        </figure>
+        </div>
       </section>
 
       <section className="section about-sailpost" aria-labelledby="about-sailpost-title">
